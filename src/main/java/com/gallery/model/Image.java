@@ -14,7 +14,7 @@ public class Image {
     private Long id;
 
     @Column
-    private String docName;
+    private String imgName;
 
     @Column
     @Lob

@@ -64,7 +64,7 @@ public class GalleryController {
     public String uploadToDB(Model model, @RequestParam("file") MultipartFile file, @RequestParam("galleryId")Long galleryId ) {
         Image doc = new Image();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        doc.setDocName(fileName);
+        doc.setImgName(fileName);
         try {
             doc.setFile(file.getBytes());
             doc.setGallery(galleryService.getGalleryById(galleryId));

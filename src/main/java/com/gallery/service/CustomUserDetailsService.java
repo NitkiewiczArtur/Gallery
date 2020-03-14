@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 
-/**
- *based on Ramesh Fadatare code
- *
- */
 
 @Service
 @Transactional
