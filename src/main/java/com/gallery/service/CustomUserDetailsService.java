@@ -13,6 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
+/**
+ *based on Ramesh Fadatare code
+ *
+ */
+
 @Service
 @Transactional
 public class CustomUserDetailsService implements UserDetailsService {
@@ -23,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByLogin(userName)
-                .orElseThrow(() -> new UsernameNotFoundException("Email " + userName + " not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User " + userName + " not found"));
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
                 getAuthorities(user));
     }
