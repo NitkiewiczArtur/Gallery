@@ -3,7 +3,6 @@ package com.gallery.model;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +17,4 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List< User > users;
 
-    public String getName() {
-        return name;
-    }
 }

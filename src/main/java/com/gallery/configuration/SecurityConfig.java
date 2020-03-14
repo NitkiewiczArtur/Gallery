@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,9 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/index", "/main")
+                    .antMatchers("/index", "/main", "/showGallery")
                     .hasAnyAuthority("ROLE_USER")
-                    .antMatchers("/users").hasAnyAuthority("ROLE_ADMIN")
+                    .antMatchers("/createGallery","/createGalleryPanel", "/upload/db").hasAnyAuthority("ROLE_PHOTOGRAPHER")
                     .anyRequest().permitAll()
                     .and()
                     .csrf().disable()
