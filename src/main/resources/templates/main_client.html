@@ -9,7 +9,7 @@
 </head>
 <body>
 <main class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary container">
         <a class="navbar-brand" href="/main">Gallery</a>
         <div style="float: left">
             <h2>Main Menu</h2>
@@ -30,9 +30,11 @@
             <span class="navbar-text" style="float: left">
 
                 <a th:text=${currentlyLoggedUser.login}></a>
-                    <a th:text=${currentlyLoggedUser.name}></a>
-
-    </span>
+                <a th:text=${currentlyLoggedUser.name}></a>
+                <form action="/logout">
+                    <input type="submit" class="button btn-danger" value="Logout">
+                </form>
+            </span>
         </div>
     </nav>
 
