@@ -12,7 +12,8 @@ import java.util.List;
 
 public interface GalleryRepository extends JpaRepository < Gallery, Long > {
     List<Gallery> getGalleryByUsers(User user);
-
+    Gallery getByGalleryName(String galleryName);
+    Gallery getById(Long id);
     @Transactional
     @Modifying
     @Query(

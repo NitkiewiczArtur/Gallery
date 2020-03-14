@@ -24,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -58,31 +60,43 @@ public class MainController {
 
         model.addAttribute("galleryList" , galleryList);
         model.addAttribute("currentlyLoggedUser", currentlyLoggedUser);
-
-        if(currentlyLoggedUserRolesList.size() > 1)
-        return "main_photographer";
-        else
-            return "main_client";
+        for (Role role: currentlyLoggedUserRolesList) {
+            if(role.getName().equalsIgnoreCase("ROLE_PHOTOGRAPHER"))
+                return "main_photographer";
+            if(role.getName().equalsIgnoreCase("ROLE_CLIENT"))
+                return "main_client";
+        }
+        return null;
     }
 
     @GetMapping("/createGallery")
     public String createGallery(Model model, @RequestParam("galleryName") String galleryName){
         User currentlyLoggedUser = Utils.getUser(userService);
-        galleryService.createGallery(galleryName);
+        galleryService.createGallery(galleryName, 2L);
 
-
+        model.addAttribute("galleryId", galleryService.getGalleryIdFromName(galleryName));
         model.addAttribute("currentlyLoggedUser", currentlyLoggedUser);
         return "createGallery";
     }
 
+    @GetMapping("/showGallery")
+    public String showGallery(Model model, @RequestParam Long galleryId) {
 
+        Gallery galleryToShow = galleryService.getGalleryById(galleryId);
+
+        model.addAttribute("galleryToShow", galleryToShow);
+        model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
+
+        return "showWorkoutResults";
+    }
     @PostMapping("/upload/db")
-    public ResponseEntity uploadToDB(@RequestParam("file") MultipartFile file) {
+    public String uploadToDB(Model model, @RequestParam("file") MultipartFile file, @RequestParam("galleryId")Long galleryId ) {
         Image doc = new Image();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         doc.setDocName(fileName);
         try {
             doc.setFile(file.getBytes());
+            doc.setGallery(galleryService.getGalleryById(galleryId));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,7 +105,8 @@ public class MainController {
                 .path("/files/download/")
                 .path(fileName).path("/db")
                 .toUriString();
-        return ResponseEntity.ok(fileDownloadUri);
+        model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
+        return "createGallery";
     }
 
 }

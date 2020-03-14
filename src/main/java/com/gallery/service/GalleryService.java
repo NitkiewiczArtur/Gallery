@@ -19,16 +19,22 @@ public class GalleryService {
     @Autowired
     UserService userService;
 
-    public void createGallery(String galleryName){
+    public Long getGalleryIdFromName(String galleryName){
+        return galleryRepository.getByGalleryName(galleryName).getId();
+    }
+    public void createGallery(String galleryName, Long clientId){
         Gallery gallery = new Gallery();
         gallery.setGalleryName(galleryName);
         Long galleryId = galleryRepository.save(gallery).getId();
         galleryRepository.insertGalleryToUser(getCurrentlyloggedUser().getId(), galleryId);
-
+        galleryRepository.insertGalleryToUser(clientId, galleryId);
     }
 
 
+    public Gallery getGalleryById(Long id){
+        return galleryRepository.getById(id);
 
+    }
 
     public void addImageToGallery(Image image, Long galleryId){
 
