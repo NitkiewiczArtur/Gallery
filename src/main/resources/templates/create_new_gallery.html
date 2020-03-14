@@ -39,25 +39,27 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Gallery</th>
-            <th>Show gallery</th>
-
+            <th>Client</th>
         </tr>
         </thead>
         <tbody>
+        <form action="/createGallery" method="get">
+        <h>New gallery name:</h>
+        <input type="text" name="galleryName" th:value="${galleryName}">
 
         <div class="nav justify-content-end">
-            <tr th:each="gallery : ${galleryList}">
-                <td th:text="${gallery.galleryName}"></td>
-                <form action="/showGallery" method="get">
-                    <input type="hidden" name="galleryId" th:value="${gallery.id}">
-                    <td><input type="submit" value="Show"></td>
-                </form>
+            <tr th:each="client : ${clientList}">
+                <td th:text="${client.name}"></td>
+
+                    <input type="hidden" name="clientId" th:value="${client.id}">
+                    <td><input type="submit" value="Create"></td>
+
 
             </tr>
         </div>
+        </form>
         </tbody>
-
+    </table>
 </main>
 
 </body>

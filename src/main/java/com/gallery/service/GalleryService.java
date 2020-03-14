@@ -36,9 +36,7 @@ public class GalleryService {
 
     }
 
-    public void addImageToGallery(Image image, Long galleryId){
 
-    }
 
     public List<Gallery> getGalleriesByUserId(User user){
         return galleryRepository.getGalleryByUsers(user);

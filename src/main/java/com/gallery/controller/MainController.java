@@ -70,13 +70,22 @@ public class MainController {
     }
 
     @GetMapping("/createGallery")
-    public String createGallery(Model model, @RequestParam("galleryName") String galleryName){
-        User currentlyLoggedUser = Utils.getUser(userService);
-        galleryService.createGallery(galleryName, 2L);
+    public String createGallery(Model model, @RequestParam("galleryName") String galleryName, @RequestParam("clientId") Long clientId){
+
+        galleryService.createGallery(galleryName, clientId);
 
         model.addAttribute("galleryId", galleryService.getGalleryIdFromName(galleryName));
-        model.addAttribute("currentlyLoggedUser", currentlyLoggedUser);
+        model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
         return "createGallery";
+    }
+    @GetMapping("/createGalleryPanel")
+    public String createGalleryPanel(Model model){
+
+        List<User> clientList = userService.getAllClients();
+
+        model.addAttribute("clientList", clientList);
+        model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
+        return "create_new_gallery";
     }
 
     @GetMapping("/showGallery")
