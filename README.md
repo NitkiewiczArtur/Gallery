@@ -49,6 +49,7 @@ https://www.devglan.com/spring-boot/spring-boot-file-upload-download
 https://github.com/jonathanborenstein/image-gallery
 https://www.javaguides.net/2018/09/spring-boot-spring-mvc-role-based-spring-security-jpa-thymeleaf-mysql-tutorial.html
 https://stackoverflow.com/questions/48235379/how-to-display-byte-array-from-a-model-in-thymeleaf
+https://bykowski.pl/spring-boot-23-definiowanie-wlasnych-wyjatkow/
 
 ## Author
 

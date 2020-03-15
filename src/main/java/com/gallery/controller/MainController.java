@@ -7,6 +7,7 @@ import com.gallery.repository.RoleRepository;
 import com.gallery.repository.UserRepository;
 import com.gallery.service.GalleryService;
 import com.gallery.service.ImageService;
+import com.gallery.service.RoleService;
 import com.gallery.service.UserService;
 import com.gallery.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,19 @@ import java.util.List;
 
 @Controller
 public class MainController {
+
+    private final UserService userService;
+
+    private final RoleService roleService;
+
+    private final GalleryService galleryService;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    UserRepository ur;
-    @Autowired
-    ImageService imageService;
-    @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    GalleryService galleryService;
+    public MainController(UserService userService, RoleService roleService, GalleryService galleryService) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.galleryService = galleryService;
+    }
 
     @RequestMapping(value = {"/", "/index"})
     public String index() {
@@ -43,7 +47,7 @@ public class MainController {
     @GetMapping("/main")
     public String getMainView(Model model) {
         User currentlyLoggedUser = Utils.getUser(userService);
-        List<Role> currentlyLoggedUserRolesList = roleRepository.findAllByUsers(currentlyLoggedUser);
+        List<Role> currentlyLoggedUserRolesList = roleService.findAllByUsers(currentlyLoggedUser);
         List<Gallery> galleryList = galleryService.getGalleriesByUserId(currentlyLoggedUser);
 
 

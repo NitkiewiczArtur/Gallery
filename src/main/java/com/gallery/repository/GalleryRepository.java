@@ -21,4 +21,5 @@ public interface GalleryRepository extends JpaRepository < Gallery, Long > {
                     "insert into USER_GALLERY values (:USER_ID  , :GALLERY_ID)",
             nativeQuery = true)
     void insertGalleryToUser(@Param("USER_ID") Long USER_ID, @Param("GALLERY_ID") Long GALLERY_ID);
+    boolean existsGalleryByGalleryName(String galleryName);
 }

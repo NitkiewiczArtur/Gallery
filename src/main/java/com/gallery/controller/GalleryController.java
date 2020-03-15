@@ -9,6 +9,7 @@ import com.gallery.service.GalleryService;
 import com.gallery.service.ImageService;
 import com.gallery.service.UserService;
 import com.gallery.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,15 +26,21 @@ import java.io.InputStream;
 import java.util.List;
 
 @Controller
+
 public class GalleryController {
 
-    @Autowired
-    GalleryService galleryService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    ImageService imageService;
+    private final GalleryService galleryService;
 
+    private final UserService userService;
+
+    private final ImageService imageService;
+
+    @Autowired
+    public GalleryController(GalleryService galleryService, UserService userService, ImageService imageService) {
+        this.galleryService = galleryService;
+        this.userService = userService;
+        this.imageService = imageService;
+    }
 
     @GetMapping("/createGalleryPanel")
     public String createGalleryPanel(Model model){
@@ -50,8 +57,10 @@ public class GalleryController {
                                 @RequestParam("clientId") Long clientId)
                                 throws GalleryNameAlreadyTakenException {
 
-        if(null == createdGalleryId) throw new GalleryNameAlreadyTakenException();
-        createdGalleryId = galleryService.createGallery(galleryName, clientId);
+        if(null == createdGalleryId)
+            createdGalleryId= galleryService.createGallery(galleryName, clientId);
+
+
 
         model.addAttribute("createdGalleryId", createdGalleryId);
         model.addAttribute("clientId", clientId);
@@ -76,7 +85,7 @@ public class GalleryController {
             doc.setFile(file.getBytes());
             doc.setGallery(galleryService.getGalleryById(createdGalleryId));
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         imageService.save(doc);
 
@@ -85,26 +94,5 @@ public class GalleryController {
         return "redirect:/createGallery?galleryName="+galleryName+"&clientId="+clientId+"&createdGalleryId="+createdGalleryId;
     }
 
-    @GetMapping("/showGallery")
-    public String showGallery(Model model, @RequestParam Long galleryId) {
-
-        Gallery galleryToShow = galleryService.getGalleryById(galleryId);
-        List<Image> photosFromGallery = galleryToShow.getImages();
-
-        model.addAttribute("photosToShow", photosFromGallery);
-        model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
-
-        return "show_gallery";
-    }
-    @GetMapping("/product/image/{id}")
-    public void showProductImage(@PathVariable Long id,
-                               HttpServletResponse response) throws IOException {
-        response.setContentType("image/jpeg");
-
-        Image image = imageService.getImageById(id);
-
-        InputStream is = new ByteArrayInputStream(image.getFile());
-        IOUtils.copy(is, response.getOutputStream());
-    }
 
 }

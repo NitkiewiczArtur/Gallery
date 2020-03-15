@@ -6,16 +6,24 @@ import com.gallery.repository.RoleRepository;
 import com.gallery.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
 
-    public void saveUser(User user) { userRepository.save(user); }
+    private final UserRepository userRepository;
+    private final RoleService roleService;
+
+    @Autowired
+    public UserService(UserRepository userRepository, RoleService roleService) {
+        this.userRepository = userRepository;
+        this.roleService = roleService;
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -25,12 +33,9 @@ public class UserService {
         return userRepository.getUserByLogin(login);
     }
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getAllClients() {
-        Role clientRole = roleRepository.findByName("ROLE_CLIENT");
+        Role clientRole = roleService.findByName("ROLE_CLIENT");
         return userRepository.findAllByRoles(clientRole);
     }
 }

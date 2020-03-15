@@ -11,7 +11,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary container">
     <a class="navbar-brand" href="/main">Gallery</a>
     <div style="float: left">
-        <h1>Main Menu</h1>
+        <h1><a th:text = "${galleryName}"></a></h1>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarText">
@@ -34,20 +34,6 @@
 <main class="container">
 
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th><h2>Client</h2></th>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Login</th>
-        </tr>
-        </thead>
-        <tbody>
-
-
             <div class="nav justify-content-end">
                 <tr th:each="photo : ${photosToShow}">
                     <img class="card-img-top" th:src="@{'product/image/'+ ${photo.id}}">
@@ -56,7 +42,7 @@
                 </tr>
             </div>
 
-        </tbody>
+
     </table>
 </main>
 

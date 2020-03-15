@@ -38,6 +38,8 @@
     </div>
 </nav>
 <main class="container">
+    <h3>Choose image to upload by clicking 'browse..' and upload it to gallery by clicking 'submit'</h3>
+    <h3>Do it for every image You want to add to gallery</h3>
 
     <form method="post" enctype="multipart/form-data" action="/upload/db">
 
@@ -48,7 +50,11 @@
         <input type="hidden" name="createdGalleryId" th:value="${createdGalleryId}">
         <input type="submit" value="submit">
     </form>
-
+    <h3>When You add all photos You can see just crated gallery by clicking button below</h3>
+    <form action="/showGallery" method="get">
+        <input type="hidden" name="galleryId" th:value="${createdGalleryId}">
+        <td><input type="submit" value="Show"></td>
+    </form>
 </main>
 </body>
 </html>
