@@ -14,7 +14,7 @@ W momencie zalogowania klienta mamy podgląd jego zdjęć.
 
 3 Go to application.properties in resource folder and fill parameters below
 
-    spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/gallery
+    spring.datasource.url= "Your database port"  (default = "jdbc:mysql://${MYSQL_HOST:localhost}:3306/gallery")
     spring.datasource.username= "Your MySQL username"
     spring.datasource.password= "Your MySQL password"
 4 Launch the app to let hibernate create all database tables.
@@ -28,9 +28,10 @@ W momencie zalogowania klienta mamy podgląd jego zdjęć.
     Password: password
 
     To login as Client use following account:
-    Login : CZA
+    Login : mama
     Password: password
-
+    
+    
 ## Running the tests
 
 No requrements for tests.
