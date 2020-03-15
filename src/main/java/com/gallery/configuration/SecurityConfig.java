@@ -13,15 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final PasswordEncoder passwordEncoder;
 
+    private final UserDetailsService customUserDetailsService;
 
-        @Autowired
-        private PasswordEncoder passwordEncoder;
+    @Autowired
+    public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService customUserDetailsService) {
+        this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService;
+    }
 
-        @Autowired
-        private UserDetailsService customUserDetailsService;
-
-        @Override
+    @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                     .antMatchers("/index", "/main", "/showGallery")
