@@ -1,5 +1,7 @@
 package com.gallery.controller;
 
+import com.gallery.exeption.GalleryNameAlreadyTakenException;
+import com.gallery.exeption.NoPhotoUploadedException;
 import com.gallery.model.Gallery;
 import com.gallery.model.Image;
 import com.gallery.model.User;
@@ -43,9 +45,12 @@ public class GalleryController {
         return "create_gallery_panel";
     }
     @GetMapping("/createGallery")
-    public String createGallery(Model model, @RequestParam("galleryName") String galleryName, @RequestParam("createdGalleryId") Long createdGalleryId, @RequestParam("clientId") Long clientId){
+    public String createGallery(Model model, @RequestParam("galleryName") String galleryName,
+                                @RequestParam("createdGalleryId") Long createdGalleryId,
+                                @RequestParam("clientId") Long clientId)
+                                throws GalleryNameAlreadyTakenException {
 
-        if(null == createdGalleryId)
+        if(null == createdGalleryId) throw new GalleryNameAlreadyTakenException();
         createdGalleryId = galleryService.createGallery(galleryName, clientId);
 
         model.addAttribute("createdGalleryId", createdGalleryId);
@@ -59,8 +64,11 @@ public class GalleryController {
     public String uploadToDB(Model model, @RequestParam("file") MultipartFile file,
                              @RequestParam("createdGalleryId") Long createdGalleryId,
                              @RequestParam("galleryName") String galleryName,
-                             @RequestParam("clientId") Long clientId) {
-        Long wtf = createdGalleryId;
+                             @RequestParam("clientId") Long clientId)
+                                throws NoPhotoUploadedException{
+
+        if(file.isEmpty()) throw new NoPhotoUploadedException();
+
         Image doc = new Image();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         doc.setImgName(fileName);
