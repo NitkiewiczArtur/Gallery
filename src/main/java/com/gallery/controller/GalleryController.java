@@ -38,7 +38,7 @@ public class GalleryController {
 
         model.addAttribute("galleryId", galleryService.getGalleryIdFromName(galleryName));
         model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
-        return "createGallery";
+        return "create_gallery";
     }
     @GetMapping("/createGalleryPanel")
     public String createGalleryPanel(Model model){
@@ -74,6 +74,6 @@ public class GalleryController {
         imageService.save(doc);
 
         model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
-        return "createGallery";
+        return "create_gallery";
     }
 }

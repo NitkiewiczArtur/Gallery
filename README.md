@@ -6,17 +6,22 @@ W momencie zalogowania klienta mamy podgląd jego zdjęć.
 
 ## Getting Started
 
-1.Copy/download the repository from github and open it with IDE like Intellij.
+1 Copy/download the repository from github and open it with IDE like Intellij.
 
-2.Open MySQL Workbench and execute data.sql file from target folder
+2 Open MySQL Workbench and execute following command:
+        
+        create databse gallery;
 
-3.Go to application.properties in resource folder and fill parameters below
+3 Go to application.properties in resource folder and fill parameters below
 
     spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/gallery
     spring.datasource.username= "Your MySQL username"
     spring.datasource.password= "Your MySQL password"
+4 Launch the app to let hibernate create all database tables.
 
-4.Login with following accounts and have fun ;) 
+5 Execute data.sql in MySQL Workbench.
+
+6 Login with following accounts and have fun ;) 
 
     To login as Photographer use following account:
     Login : arli 
