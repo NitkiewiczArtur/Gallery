@@ -36,18 +36,19 @@ W momencie zalogowania klienta mamy podgląd jego zdjęć.
 No requrements for tests.
 
 
-
 ## Built With
 
 * [Spring Boot](https://spring.io/projects/spring-boot) - Java framework used for web apps development.
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [MySQL Database](https://www.mysql.com/) - SQL database
 * [Thymeleaf](https://www.thymeleaf.org/) - Server-side Java template engine for both web and standalone environments
+* [Apache Commons IO](https://mvnrepository.com/artifact/commons-io/commons-io/2.5) - Apache library 
 
 ## Written With Help Of...
 https://www.devglan.com/spring-boot/spring-boot-file-upload-download
 https://github.com/jonathanborenstein/image-gallery
 https://www.javaguides.net/2018/09/spring-boot-spring-mvc-role-based-spring-security-jpa-thymeleaf-mysql-tutorial.html
+https://stackoverflow.com/questions/48235379/how-to-display-byte-array-from-a-model-in-thymeleaf
 
 ## Author
 

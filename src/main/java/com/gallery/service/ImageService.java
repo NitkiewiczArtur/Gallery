@@ -10,6 +10,7 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
+    public Image getImageById(Long id){ return imageRepository.getOne(id);}
     public void save (Image image){
         imageRepository.save(image);
     }
