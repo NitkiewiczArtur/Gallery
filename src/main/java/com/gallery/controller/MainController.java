@@ -44,11 +44,6 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/login?error")
-    public String getLoginErrorView() {
-        return "login_error";
-    }
-
     @GetMapping("/main")
     public String getMainView(Model model) {
         User currentlyLoggedUser = Utils.getUser(userService);

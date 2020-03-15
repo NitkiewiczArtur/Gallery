@@ -36,7 +36,7 @@
 
             <div class="nav justify-content-end">
                 <tr th:each="photo : ${photosToShow}">
-                    <img class="card-img-top" th:src="@{'product/image/'+ ${photo.id}}">
+                    <img class="responsive" th:src="@{'product/image/'+ ${photo.id}}">
 
 
                 </tr>
@@ -47,4 +47,11 @@
 </main>
 
 </body>
+<style>
+    .responsive {
+        width: 100%;
+        max-width: 400px;
+        height: 100%;
+    }
+</style>
 </html>
