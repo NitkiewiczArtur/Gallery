@@ -44,6 +44,7 @@ No requrements for tests.
 * [MySQL Database](https://www.mysql.com/) - SQL database
 * [Thymeleaf](https://www.thymeleaf.org/) - Server-side Java template engine for both web and standalone environments
 * [Apache Commons IO](https://mvnrepository.com/artifact/commons-io/commons-io/2.5) - Apache library 
+* [Lombock](https://projectlombok.org/) -library that automatically plugs into your editor and build tools, spicing up your java
 
 ## Written With Help Of...
 https://www.devglan.com/spring-boot/spring-boot-file-upload-download
