@@ -25,12 +25,13 @@ public class GalleryService {
         return galleryRepository.getGalleryByUsers(user);
     }
 
-    public void createGallery(String galleryName, Long clientId){
+    public Long createGallery(String galleryName, Long clientId){
         Gallery gallery = new Gallery();
         gallery.setGalleryName(galleryName);
         Long galleryId = galleryRepository.save(gallery).getId();
         galleryRepository.insertGalleryToUser(getCurrentlyloggedUser().getId(), galleryId);
         galleryRepository.insertGalleryToUser(clientId, galleryId);
+        return galleryId;
     }
 
     private User getCurrentlyloggedUser() {

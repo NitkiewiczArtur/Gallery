@@ -3,7 +3,6 @@ package com.gallery.controller;
 import com.gallery.model.Gallery;
 import com.gallery.model.Image;
 import com.gallery.model.User;
-import com.gallery.repository.ImageRepository;
 import com.gallery.service.GalleryService;
 import com.gallery.service.ImageService;
 import com.gallery.service.UserService;
@@ -41,34 +40,41 @@ public class GalleryController {
 
         model.addAttribute("clientList", clientList);
         model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
-        return "create_new_gallery";
+        return "create_gallery_panel";
     }
     @GetMapping("/createGallery")
-    public String createGallery(Model model, @RequestParam("galleryName") String galleryName, @RequestParam("clientId") Long clientId){
+    public String createGallery(Model model, @RequestParam("galleryName") String galleryName, @RequestParam("createdGalleryId") Long createdGalleryId, @RequestParam("clientId") Long clientId){
 
-        galleryService.createGallery(galleryName, clientId);
+        if(null == createdGalleryId)
+        createdGalleryId = galleryService.createGallery(galleryName, clientId);
 
+        model.addAttribute("createdGalleryId", createdGalleryId);
+        model.addAttribute("clientId", clientId);
         model.addAttribute("galleryName", galleryName);
-        model.addAttribute("galleryId", galleryService.getGalleryIdFromName(galleryName));
         model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
         return "create_gallery";
     }
 
     @PostMapping("/upload/db")
-    public String uploadToDB(Model model, @RequestParam("file") MultipartFile file, @RequestParam("galleryId")Long galleryId, @RequestParam("galleryName") String galleryName) {
+    public String uploadToDB(Model model, @RequestParam("file") MultipartFile file,
+                             @RequestParam("createdGalleryId") Long createdGalleryId,
+                             @RequestParam("galleryName") String galleryName,
+                             @RequestParam("clientId") Long clientId) {
+        Long wtf = createdGalleryId;
         Image doc = new Image();
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         doc.setImgName(fileName);
         try {
             doc.setFile(file.getBytes());
-            doc.setGallery(galleryService.getGalleryById(galleryId));
+            doc.setGallery(galleryService.getGalleryById(createdGalleryId));
         } catch (IOException e) {
             e.printStackTrace();
         }
         imageService.save(doc);
 
+
         model.addAttribute("currentlyLoggedUser", Utils.getUser(userService));
-        return "redirect:/createGallery?galleryName="+galleryName;
+        return "redirect:/createGallery?galleryName="+galleryName+"&clientId="+clientId+"&createdGalleryId="+createdGalleryId;
     }
 
     @GetMapping("/showGallery")
@@ -85,7 +91,7 @@ public class GalleryController {
     @GetMapping("/product/image/{id}")
     public void showProductImage(@PathVariable Long id,
                                HttpServletResponse response) throws IOException {
-        response.setContentType("image/jpeg"); // Or whatever format you wanna use
+        response.setContentType("image/jpeg");
 
         Image image = imageService.getImageById(id);
 
